@@ -3,7 +3,7 @@
 - Get strings from user input
 - Store the string and the shift factor
 - Check every character in the string and see if it's a letter
-- If it is a letter, give the letter the value that is 5 places before it in the $alphabet
+- If it is a letter, give the letter the shift value to the right
 - Store all the new letters in a variable
 - Print out the variable for the user to see their Caesar's cipher
 =end
