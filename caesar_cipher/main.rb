@@ -12,52 +12,59 @@ $alphabet   = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", 
 $cipher     = ""
 $captilized = nil
 
-def caesar_cipher(character, shift)
+def caesar_cipher(character, shift_factor)
   if character == character.upcase
     $captilized = true
   else
     $captilized = false
   end
   
-  letter_shift = $alphabet.index(character.downcase) + shift
+  letter_shift = $alphabet.index(character.downcase) + shift_factor
   
-  if letter_shift >= $alphabet.length
-    letter_shift = letter_shift - $alphabet.length
+  letter_shift = letter_shift - $alphabet.length
+  
+  puts letter_shift
     
-    if $captilized
-      character = $alphabet[letter_shift].upcase
-    else
-      character = $alphabet[letter_shift]
-    end
+  if $captilized
+    character = $alphabet[letter_shift].upcase
   else
-    if $captilized
-      character = $alphabet[letter_shift].upcase
-    else
-      character = $alphabet[letter_shift]
-    end
+    character = $alphabet[letter_shift]
   end
   
   $cipher << character
 end
 
+puts "------------------------------------"
 puts "Enter text for your Caesar's Cipher:"
+puts "------------------------------------"
+
 user_string = gets.chomp
 
-puts "Enter the shift factor (it will go to the right):"
+puts "-------------------------------------------------------------------------------------"
+puts "Enter the shift factor (which will move right), but only enter a number from 1 to 26:"
+puts "-------------------------------------------------------------------------------------"
+
 user_shift = gets.chomp
 user_shift = user_shift.to_i
 
-user_string.split("").each do |character|
-  if $alphabet.include? character.downcase
-    $alphabet.each do |letter|
-      if character.downcase == letter
-        caesar_cipher(character, user_shift)
+if (1..26).include? user_shift
+  user_string.split("").each do |character|
+    if $alphabet.include? character.downcase
+      $alphabet.each do |letter|
+        if character.downcase == letter
+          caesar_cipher(character, user_shift)
+        end
       end
+    else
+      $cipher << character
     end
-  else
-    $cipher << character
   end
+  
+  puts "------------------------------------"
+  puts "The Caesar's Cipher of your text is:"
+  puts "------------------------------------"
+  
+  puts $cipher
+else
+  puts "Error: you must enter a shift factor between 1 and 26."
 end
-
-puts "The Caesar's Cipher of your text is:"
-puts $cipher
