@@ -22,8 +22,6 @@ def caesar_cipher(character, shift_factor)
   letter_shift = $alphabet.index(character.downcase) + shift_factor
   
   letter_shift = letter_shift - $alphabet.length
-  
-  puts letter_shift
     
   if $captilized
     character = $alphabet[letter_shift].upcase
