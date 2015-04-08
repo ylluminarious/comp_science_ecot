@@ -43,7 +43,12 @@ puts "Enter the shift factor (which will move right), but only enter a number fr
 puts "-------------------------------------------------------------------------------------"
 
 user_shift = gets.chomp
-user_shift = user_shift.to_i
+
+if user_shift.include? "."
+  # do not make `user_shift` an integer and therefore the error will be thrown
+else
+  user_shift = user_shift.to_i
+end
 
 if (1..26).include? user_shift
   user_string.split("").each do |character|
