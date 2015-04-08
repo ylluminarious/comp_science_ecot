@@ -38,9 +38,9 @@ puts "------------------------------------"
 
 user_string = gets.chomp
 
-puts "-------------------------------------------------------------------------------------"
-puts "Enter the shift factor (which will move right), but only enter a number from 1 to 26:"
-puts "-------------------------------------------------------------------------------------"
+puts "---------------------------------------------------------------------------------------"
+puts "Enter the shift factor (which will move right), but only enter an integer from 1 to 26:"
+puts "---------------------------------------------------------------------------------------"
 
 user_shift = gets.chomp
 
@@ -69,5 +69,7 @@ if (1..26).include? user_shift
   
   puts $cipher
 else
-  puts "Error: you must enter a shift factor between 1 and 26."
+  puts "------------------------------------------------------------------------"
+  puts "Error: you must enter an integer between 1 and 26 for your shift factor."
+  puts "------------------------------------------------------------------------"
 end
