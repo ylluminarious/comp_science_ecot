@@ -1,13 +1,3 @@
-=begin
-- Tell the user to give input for their cipher (their string and their shift factor)
-- Get strings from user input
-- Store the string and the shift factor
-- Check every character in the string and see if it's a letter
-- If it is a letter, give the letter the shift value to the right
-- Store all the new letters in a variable
-- Print out the variable for the user to see their Caesar's cipher
-=end
-
 $alphabet   = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 $cipher     = ""
 $captilized = nil
