@@ -13,12 +13,12 @@ class Game
     @@correct_letters    = []
     @@incorrect_letters  = []
     
-    puts "================================================================================================"
+    puts "===================================================================================="
     puts "Welcome to Hangman!"
-    puts "In this version of the game, you play against an AI (artificial intelligence) to guess the word."
-    puts "Be careful, though. You and the AI only have 15 collective guesses to find out what the word is."
+    puts "In this version of the game, you play against the computer to guess the word."
+    puts "You and the computer only have 15 guesses altogether to find out what it is, though."
     puts "Good luck!"
-    puts "================================================================================================"
+    puts "===================================================================================="
     
     puts "The word for this round:\n"
     @@random_word_array.each do |char|
@@ -28,14 +28,14 @@ class Game
       end
     end
     
-    @user = Player.new
-    @ai   = Player.new
+    @user     = Player.new
+    @computer = Player.new
     
     tick
   end
   
   def select_random_word
-    random_index      = rand(@dictionary_words.length - 1) # - 1 because 0 index
+    random_index      = rand(@dictionary_words.length - 1) # - 1 to correct the 0 offset
     @random_word      = @dictionary_words[random_index].downcase
     @random_word.chop!
     
@@ -66,15 +66,15 @@ class Game
     @@correct_letters.push(guess)
     puts @@unknown_word
     
-    if @@unknown_word.include?("_") == false
+    if !@@unknown_word.include?("_")
       if guesser == "user"
         puts "\nYou win!"
-      elsif guesser == "AI"
-        puts "\nThe AI wins!"
+      elsif guesser == "computer"
+        puts "\nThe computer wins!"
       end
-    elsif @@turn_count == 15 && @@unknown_word.include?("_")
+    elsif @@turn_count == 15
       puts "\nNobody won this round."
-      puts "The word was: \"#{@@random_word_array.join}\"."
+      puts "The word was \"#{@@random_word_array.join}\"."
     end
   end
   
@@ -82,22 +82,22 @@ class Game
     if guesser == "user"
       puts "Sorry, that's not correct."
     else
-      puts "Looks like the AI guessed wrong."
+      puts "Looks like the computer guessed wrong."
     end
 
     @@incorrect_letters.push(@guess)
     
     if @@turn_count == 15 && @@unknown_word.include?("_")
       puts "\nNobody won this round."
-      puts "The word was: \"#{@@random_word_array.join}\"."
+      puts "The word was \"#{@@random_word_array.join}\"."
     end
   end
   
   def tick
     @user.guess("user")
-    @ai.guess("AI")
+    @computer.guess("computer")
     
-    if @@turn_count < 15
+    if @@turn_count < 15  && @@unknown_word.include?("_")
       puts "\nCorrect and incorrect letters so far:\n"
       puts "Correct:   #{@@correct_letters.join(", ")}"
       puts "Incorrect: #{@@incorrect_letters.join(", ")}"
