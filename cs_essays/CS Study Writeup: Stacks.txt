@@ -1,0 +1,29 @@
+Study Writeup: Stacks
+
+Stacks are an important part of computer science. They can be thought of like a stack of books; you can only add or remove books, i.e. items, from the top of the stack. Here is an image representing the aforementioned concept: http://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Data_stack.svg/500px-Data_stack.svg.png. Additionally, a stack is a type of data structure.
+
+An important application of stacks is recursion. Recursions are exactly what they sound like: something recurring over and over again, kind of like the movie “Inception”. In the case of computer science, it’s a function calling itself over and over again, and in practical cases, not indefinitely. They are used quite often in computer science when something is needed to repeat, and are, of course, given an ending condition so that a given program does not crash. Here is an example of recursion that I implemented in Ruby:
+
+
+$numbers = [1, 1]
+$counter = 0
+
+def fib_sequence
+  if $counter < (10 - 2)
+    new_num = $numbers[$counter] + $numbers[$counter + 1]
+    $numbers << new_num
+    $counter += 1
+    fib_sequence
+  else
+    puts $numbers
+  end
+end
+
+fib_sequence
+
+
+The above program simply outputs the first 10 numbers of the Fibonacci sequence. It builds upon the stack until it hits the ending condition and breaks out of the recursion, outputting the answer.
+
+Another important use of stacks is backtracking. Backtracking is essentially the use of stacks to go backwards in a set of data, by popping items off of the stack. A simple algorithm that makes use of backtracking, and therefore stacks, is traversing through a maze. One starts at a given point in the maze. There are then a series of points that can be chosen to head to. One can push points onto the stack while traversing the maze. This is useful because, if a certain path of points is found to be a dead end, one can pop points off of the stack, going backwards in the maze to select a different path.
+
+All in all, stacks are an important part of computer science. Stacks are very practical because they are such basic data structures. As such, they have many applications and are used by programmers and computer scientists every day.
