@@ -18,168 +18,51 @@ class Game
     tick
   end
   
-  def spot_taken
-    puts "Sorry, that spot's taken."
-  end
-  
-  def get_x_input
-    if @player_o.win == false && @tie == false
-      puts "Enter X player's move:"
-      @player_x.move = gets.chomp
+  def get_input(player)
+    if player == @player_x
+      enemy = @player_o
+    else
+      enemy = @player_x
+    end
     
-      if @player_x.move == "tr"
-        if @board.top_right != " "
-          spot_taken
-          get_x_input
-        else
-          @board.top_right = "X"
-          @board.draw
-        end
-      elsif @player_x.move == "tc"
-        if @board.top_center != " "
-          spot_taken
-          get_x_input
-        else
-          @board.top_center = "X"
-          @board.draw
-        end
-      elsif @player_x.move == "tl"
-        if @board.top_left != " "
-          spot_taken
-          get_x_input
-        else
-          @board.top_left = "X"
-          @board.draw
-        end
-      elsif @player_x.move == "cr"
-        if @board.center_right != " "
-          spot_taken
-          get_x_input
-        else
-          @board.center_right = "X"
-          @board.draw
-        end
-      elsif @player_x.move == "cc"
-        if @board.center_center != " "
-          spot_taken
-          get_x_input
-        else
-          @board.center_center = "X"
-          @board.draw
-        end
-      elsif @player_x.move == "cl"
-        if @board.center_left != " "
-          spot_taken
-          get_x_input
-        else
-          @board.center_left = "X"
-          @board.draw
-        end
-      elsif @player_x.move == "br"
-        if @board.bottom_right != " "
-          spot_taken
-          get_x_input
-        else
-          @board.bottom_right = "X"
-          @board.draw
-        end
-      elsif @player_x.move == "bc"
-        if @board.bottom_center != " "
-          spot_taken
-          get_x_input
-        else
-          @board.bottom_center = "X"
-          @board.draw
-        end
-      elsif @player_x.move == "bl"
-        if @board.bottom_left != " "
-          spot_taken
-          get_x_input
-        else
-          @board.bottom_left = "X"
-          @board.draw
-        end
+    check_if_spot_taken = lambda do |spot|
+      board_spot = @board.instance_variable_get("@#{spot}")
+      
+      unless board_spot == " "
+        puts "Sorry, that spot's taken."
+        get_input(player)
+      else
+        @board.instance_variable_set("@#{spot}", player.mark)
+        @board.draw
       end
     end
-  end
-  
-  def get_o_input
-    if @player_x.win == false && @tie == false
-      puts "Enter O player's move:"
-      @player_o.move = gets.chomp
     
-      if @player_o.move == "tr"
-        if @board.top_right != " "
-          spot_taken
-          get_o_input
-        else
-          @board.top_right = "O"
-          @board.draw
-        end
-      elsif @player_o.move == "tc"
-        if @board.top_center != " "
-          spot_taken
-          get_o_input
-        else
-          @board.top_center = "O"
-          @board.draw
-        end
-      elsif @player_o.move == "tl"
-        if @board.top_left != " "
-          spot_taken
-          get_o_input
-        else
-          @board.top_left = "O"
-          @board.draw
-        end
-      elsif @player_o.move == "cr"
-        if @board.center_right != " "
-          spot_taken
-          get_o_input
-        else
-          @board.center_right = "O"
-          @board.draw
-        end
-      elsif @player_o.move == "cc"
-        if @board.center_center != " "
-          spot_taken
-          get_o_input
-        else
-          @board.center_center = "O"
-          @board.draw
-        end
-      elsif @player_o.move == "cl"
-        if @board.center_left != " "
-          spot_taken
-          get_o_input
-        else
-          @board.center_left = "O"
-          @board.draw
-        end
-      elsif @player_o.move == "br"
-        if @board.bottom_right != " "
-          spot_taken
-          get_o_input
-        else
-          @board.bottom_right = "O"
-          @board.draw
-        end
-      elsif @player_o.move == "bc"
-        if @board.bottom_center != " "
-          spot_taken
-          get_o_input
-        else
-          @board.bottom_center = "O"
-          @board.draw
-        end
-      elsif @player_o.move == "bl"
-        if @board.bottom_left != " "
-          spot_taken
-          get_o_input
-        else
-          @board.bottom_left = "O"
-          @board.draw
-        end
+    if enemy.win == false && @tie == false
+      puts "Enter #{player.mark} player's move:"
+      player.move = gets.chomp.downcase
+      
+      case player.move
+      when "tr"
+        check_if_spot_taken.call "tr"
+      when "tc"
+        check_if_spot_taken.call "tc"
+      when "tl"
+        check_if_spot_taken.call "tl"
+      when "cr"
+        check_if_spot_taken.call "cr"
+      when "cc"
+        check_if_spot_taken.call "cc"
+      when "cl"
+        check_if_spot_taken.call "cl"
+      when "br"
+        check_if_spot_taken.call "br"
+      when "bc"
+        check_if_spot_taken.call "bc"
+      when "bl"
+        check_if_spot_taken.call "bl"
+      else
+        puts "Not valid input.\n\n"
+        get_input(player)
       end
     end
   end
@@ -187,36 +70,36 @@ class Game
   def check_board(player)
     if @tie == false
       # Horizontal rows check
-      if @board.top_right == player.mark && @board.top_center == player.mark && @board.top_left == player.mark
+      if @board.tr == player.mark && @board.tc == player.mark && @board.tl == player.mark
         player.win = true
-      elsif @board.center_right == player.mark && @board.center_center == player.mark && @board.center_left == player.mark
+      elsif @board.cr == player.mark && @board.cc == player.mark && @board.cl == player.mark
         player.win = true
-      elsif @board.bottom_right == player.mark && @board.bottom_center == player.mark && @board.bottom_left == player.mark
+      elsif @board.br == player.mark && @board.bc == player.mark && @board.bl == player.mark
         player.win = true
       end
-  
+      
       # Vertical rows check
-      if @board.top_right == player.mark && @board.center_right == player.mark && @board.bottom_right == player.mark
+      if @board.tr == player.mark && @board.cr == player.mark && @board.br == player.mark
         player.win = true
-      elsif @board.top_center == player.mark && @board.center_center == player.mark && @board.bottom_center == player.mark
+      elsif @board.tc == player.mark && @board.cc == player.mark && @board.bc == player.mark
         player.win = true
-      elsif @board.top_left == player.mark && @board.center_left == player.mark && @board.bottom_left == player.mark
+      elsif @board.tl == player.mark && @board.cl == player.mark && @board.bl == player.mark
         player.win = true
       end
-  
+      
       # Diagonal rows check
-      if @board.top_right == player.mark && @board.center_center == player.mark && @board.bottom_left == player.mark
+      if @board.tr == player.mark && @board.cc == player.mark && @board.bl == player.mark
         player.win = true
-      elsif @board.top_left == player.mark && @board.center_center == player.mark && @board.bottom_right == player.mark
+      elsif @board.tl == player.mark && @board.cc == player.mark && @board.br == player.mark
         player.win = true
       end
-    
+      
       # Tie check
-      if @board.top_right != " " && @board.top_center != " " && @board.top_left != " " && @board.center_right != " " && @board.center_center != " " && @board.center_left != " " && @board.bottom_left != " " && @board.bottom_center != " " && @board.bottom_right != " "
+      if @board.tr != " " && @board.tc != " " && @board.tl != " " && @board.cr != " " && @board.cc != " " && @board.cl != " " && @board.bl != " " && @board.bc != " " && @board.br != " "
         @tie = true
         puts "Tie!"
       end
-  
+      
       if player.win == true
         puts "#{player.mark} player wins!"
       end
@@ -224,11 +107,11 @@ class Game
   end
   
   def tick
-    get_x_input
+    get_input(@player_x)
     
     check_board(@player_x)
     
-    get_o_input
+    get_input(@player_o)
     
     check_board(@player_o)
     
