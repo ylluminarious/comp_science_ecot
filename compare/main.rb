@@ -11,7 +11,7 @@
 puts "Enter an integer:"
 integer = gets.chomp
 
-forbidden_characters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "."]
+forbidden_characters = ("a".."z").to_a
 check_if_even_or_odd = true
 
 forbidden_characters.each do |char|
