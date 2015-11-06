@@ -25,45 +25,28 @@ class Game
       enemy = @player_x
     end
     
-    check_if_spot_taken = lambda do |spot|
-      board_spot = @board.instance_variable_get("@#{spot}")
+    check_if_spot_taken = lambda do |move|
+      spot_on_board = @board.instance_variable_get("@#{move}")
+      spots         = @board.board_spots
       
-      unless board_spot == " "
-        puts "Sorry, that spot's taken."
-        get_input(player)
+      if spots.any? { |spot| move[spot] }
+        unless spot_on_board == " "
+          puts "Sorry, that spot's taken.\n\n"
+          get_input(player)
+        else
+          @board.instance_variable_set("@#{move}", player.mark)
+          @board.draw
+        end
       else
-        @board.instance_variable_set("@#{spot}", player.mark)
-        @board.draw
+        puts "Not valid input.\n\n"
+        get_input(player)
       end
     end
     
     if enemy.win == false && @tie == false
       puts "Enter #{player.mark} player's move:"
       player.move = gets.chomp.downcase
-      
-      case player.move
-      when "tr"
-        check_if_spot_taken.call "tr"
-      when "tc"
-        check_if_spot_taken.call "tc"
-      when "tl"
-        check_if_spot_taken.call "tl"
-      when "cr"
-        check_if_spot_taken.call "cr"
-      when "cc"
-        check_if_spot_taken.call "cc"
-      when "cl"
-        check_if_spot_taken.call "cl"
-      when "br"
-        check_if_spot_taken.call "br"
-      when "bc"
-        check_if_spot_taken.call "bc"
-      when "bl"
-        check_if_spot_taken.call "bl"
-      else
-        puts "Not valid input.\n\n"
-        get_input(player)
-      end
+      check_if_spot_taken.call(player.move)
     end
   end
   
