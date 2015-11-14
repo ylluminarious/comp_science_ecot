@@ -1,5 +1,5 @@
 class Board
-  attr_reader :board_spots
+  attr_reader :spots
   
   attr_accessor :tr
   attr_accessor :tc
@@ -14,9 +14,9 @@ class Board
   attr_accessor :bl
   
   def initialize
-    @board_spots = ["tr", "tc", "tl", "cr", "cc", "cl", "br", "bc", "bl"]
+    @spots = ["tr", "tc", "tl", "cr", "cc", "cl", "br", "bc", "bl"]
     
-    @board_spots.each do |name|
+    @spots.each do |name|
       instance_variable_set("@#{name}", " ")
     end
   end

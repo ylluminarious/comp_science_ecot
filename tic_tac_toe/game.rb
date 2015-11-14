@@ -25,12 +25,12 @@ class Game
       enemy = @player_x
     end
     
-    check_if_spot_taken = lambda do |move|
-      spot_on_board = @board.instance_variable_get("@#{move}")
-      spots         = @board.board_spots
+    check_spot = lambda do |move|
+      spots = @board.spots
       
-      if spots.any? { |spot| move[spot] }
-        unless spot_on_board == " "
+      if spots.any? { |spot| spot[move] } && !move.include?(" ")
+        board_spot = @board.instance_variable_get("@#{move}")
+        unless board_spot == " "
           puts "Sorry, that spot's taken.\n\n"
           get_input(player)
         else
@@ -46,7 +46,7 @@ class Game
     if enemy.win == false && @tie == false
       puts "Enter #{player.mark} player's move:"
       player.move = gets.chomp.downcase
-      check_if_spot_taken.call(player.move)
+      check_spot.call(player.move)
     end
   end
   
