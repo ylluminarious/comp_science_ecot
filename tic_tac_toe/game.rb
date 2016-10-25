@@ -78,7 +78,7 @@ class Game
       end
       
       # Tie check
-      if @board.tr != " " && @board.tc != " " && @board.tl != " " && @board.cr != " " && @board.cc != " " && @board.cl != " " && @board.bl != " " && @board.bc != " " && @board.br != " "
+      if @board.tr != " " && @board.tc != " " && @board.tl != " " && @board.cr != " " && @board.cc != " " && @board.cl != " " && @board.br != " " && @board.bc != " " && @board.bl != " "
         @tie = true
         puts "Tie!"
       end
